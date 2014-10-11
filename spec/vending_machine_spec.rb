@@ -13,7 +13,7 @@ RSpec.describe VendingMachine do
 
     context "10円を投入した場合" do
       let(:money) do
-        Yen.new(10)
+        10
       end
 
       it { is_expected.to eq(10) }
@@ -22,8 +22,8 @@ RSpec.describe VendingMachine do
     context "100円1枚と10円5枚を投入した場合" do
       let(:money) do
         [
-          Yen.new(100),
-          Yen.new(10), Yen.new(10), Yen.new(10), Yen.new(10), Yen.new(10)
+          100,
+          10, 10, 10, 10, 10
         ]
       end
 
@@ -33,12 +33,26 @@ RSpec.describe VendingMachine do
     context "1000円1枚と10円3枚を投入した場合" do
       let(:money) do
         [
-          Yen.new(1000),
-          Yen.new(10), Yen.new(10), Yen.new(10)
+          1000,
+          10, 10, 10
         ]
       end
 
       it { is_expected.to eq(1030) }
+    end
+
+    context "10円3枚,50円1枚,100円2枚,500円1枚,1000円1枚を投入した場合" do
+      let(:money) do
+        [
+          10, 10, 10,
+          50,
+          100, 100,
+          500,
+          1000
+        ]
+      end
+
+      it { is_expected.to eq(1780) }
     end
   end
 end
