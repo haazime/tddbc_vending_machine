@@ -1,4 +1,5 @@
 class VendingMachine
+  AVAILABLE_MONEY = [10, 50, 100, 500, 1000].freeze
 
   def initialize
     @money_collection = []
@@ -16,6 +17,6 @@ class VendingMachine
 private
 
   def available_money?(money)
-    [1, 5, 5000, 10000].include?(money)
+    !AVAILABLE_MONEY.include?(money)
   end
 end
