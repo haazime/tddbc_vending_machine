@@ -6,19 +6,19 @@ class VendingMachine
 
   def initialize(stock=DEFAULT_STOCK)
     @stock = stock.dup
-    @amount = 0
+    @charge = 0
     @sales = 0
   end
 
   def serve_drink
-    return self unless can_buy?
+    return self unless can_serve?
     @stock[:quantity] -= 1
-    @amount -= @stock[:price]
+    @charge -= @stock[:price]
     @sales += @stock[:price]
   end
 
-  def can_buy?
-    @amount >= @stock[:price] && @stock[:quantity] > 0
+  def can_serve?
+    @charge >= @stock[:price] && @stock[:quantity] > 0
   end
 
   def drinks
@@ -27,10 +27,10 @@ class VendingMachine
 
   def receive_money(money)
     return money unless AVAILABLE_MONEY.include?(money)
-    @amount += money
+    @charge += money
   end
 
   def pay_back
-    @amount
+    @charge
   end
 end
