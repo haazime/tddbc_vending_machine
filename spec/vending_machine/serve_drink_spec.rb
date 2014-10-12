@@ -23,8 +23,8 @@ RSpec.describe VendingMachine do
         end
 
         it do
-          expect { subject }.to change { machine.stock[:quantity] }
-            .from(machine.stock[:quantity]).to(machine.stock[:quantity] - 1)
+          expect { subject }.to change { machine.stock[COLA] }
+            .from(machine.stock[COLA]).to(machine.stock[COLA] - 1)
           expect(machine.pay_back).to eq(c[:pay_back])
           expect(machine.sales).to eq(c[:sales])
         end
@@ -37,7 +37,7 @@ RSpec.describe VendingMachine do
       end
 
       it do
-        expect { subject }.to_not change { machine.stock[:quantity] }
+        expect { subject }.to_not change { machine.stock[COLA] }
         expect(machine.pay_back).to eq(110)
         expect(machine.sales).to eq(0)
       end
@@ -46,7 +46,7 @@ RSpec.describe VendingMachine do
 
   context "コーラの在庫がない場合" do
     let(:machine) do
-      described_class.new(name: 'コーラ', price: 120, quantity: 0)
+      described_class.new(COLA, 0)
     end
 
     [
@@ -62,7 +62,7 @@ RSpec.describe VendingMachine do
         end
 
         it do
-          expect { subject }.to_not change { machine.stock[:quantity] }
+          expect { subject }.to_not change { machine.stock[COLA] }
           expect(machine.pay_back).to eq(c[:pay_back])
           expect(machine.sales).to eq(c[:sales])
         end

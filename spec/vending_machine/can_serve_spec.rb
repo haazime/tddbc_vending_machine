@@ -35,7 +35,7 @@ RSpec.describe VendingMachine do
 
     context "コーラの在庫がない場合" do
       let(:machine) do
-        described_class.new(name: 'コーラ', price: 120, quantity: 0)
+        described_class.new(COLA, 0)
       end
 
       [
