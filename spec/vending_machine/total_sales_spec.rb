@@ -11,9 +11,9 @@ RSpec.describe VendingMachine do
 
   before do
     machine.receive_money(1000)
-    machine.receive_money(1000)
-    10.times { machine.serve_drink }
+    machine.receive_money(500)
+    20.times { machine.serve_drink }
   end
 
-  it { is_expected.to eq(1200) }
+  it { is_expected.to eq(120 * 12) }
 end
