@@ -7,26 +7,29 @@ context "コーラ1本在庫がある場合" do
     end
   end
 
-skip do
   it do
     machine.receive_money(10)
+    expect(machine.deposite).to eq(10)
     expect(machine.available_drinks).to be_empty
 
     machine.receive_money(100)
+    expect(machine.deposite).to eq(110)
     expect(machine.available_drinks).to be_empty
 
     machine.receive_money(10)
+    expect(machine.deposite).to eq(120)
     expect(machine.available_drinks).to match([COLA])
 
     machine.serve_drink(COLA)
     expect(machine.stock[COLA]).to eq(0)
+    expect(machine.deposite).to eq(0)
     expect(machine.pay_back).to eq(0)
     expect(machine.sales).to eq(COLA.price)
 
     machine.receive_money(500)
+    expect(machine.deposite).to eq(500)
     expect(machine.available_drinks).to be_empty
   end
-end
 end
 
 context "コーラ2本,レッドブル1本,水2本在庫がある場合" do
@@ -38,46 +41,53 @@ context "コーラ2本,レッドブル1本,水2本在庫がある場合" do
     end
   end
 
-skip do
   it do
     machine.receive_money(500)
+    expect(machine.deposite).to eq(500)
     expect(machine.available_drinks).to match([COLA, REDBULL, WATER])
 
     machine.serve_drink(WATER)
     expect(machine.stock[WATER]).to eq(1)
     expect(machine.sales).to eq(WATER.price)
-    expect(machine.pay_back).to eq(400)
+    expect(machine.deposite).to eq(400)
     expect(machine.available_drinks).to match([COLA, REDBULL, WATER])
 
     machine.serve_drink(REDBULL)
     expect(machine.stock[REDBULL]).to eq(0)
     expect(machine.sales).to eq(WATER.price + REDBULL.price)
-    expect(machine.pay_back).to eq(200)
+    expect(machine.deposite).to eq(200)
     expect(machine.available_drinks).to match([COLA, WATER])
 
     machine.serve_drink(COLA)
     expect(machine.stock[COLA]).to eq(1)
     expect(machine.sales).to eq(WATER.price + REDBULL.price + COLA.price)
-    expect(machine.pay_back).to eq(80)
+    expect(machine.deposite).to eq(80)
     expect(machine.available_drinks).to be_empty
+    expect(machine.pay_back).to eq(80)
+    expect(machine.deposite).to eq(0)
 
-    machine.receive_money(50)
+    machine.receive_money(100)
+    machine.receive_money(10)
+    machine.receive_money(10)
+    machine.receive_money(10)
+    expect(machine.deposite).to eq(130)
     expect(machine.available_drinks).to match([COLA, WATER])
 
     machine.serve_drink(COLA)
     expect(machine.stock[COLA]).to eq(0)
     expect(machine.sales).to eq(WATER.price + REDBULL.price + COLA.price + COLA.price)
-    expect(machine.pay_back).to eq(10)
+    expect(machine.deposite).to eq(10)
     expect(machine.available_drinks).to be_empty
 
     machine.receive_money(1000)
+    expect(machine.deposite).to eq(1010)
     expect(machine.available_drinks).to match([WATER])
 
     machine.serve_drink(WATER)
     expect(machine.stock[WATER]).to eq(0)
     expect(machine.sales).to eq(WATER.price + REDBULL.price + COLA.price + COLA.price + WATER.price)
-    expect(machine.pay_back).to eq(910)
     expect(machine.available_drinks).to be_empty
+    expect(machine.pay_back).to eq(910)
+    expect(machine.deposite).to eq(0)
   end
-end
 end
