@@ -9,17 +9,13 @@ class VendingMachine
   DEFAULT_DRINK = COLA
   DEFAULT_DRINK_QUANTITY = 5
 
-  attr_reader :stock, :sales
+  attr_reader :deposite, :stock, :sales
 
   def initialize
     @stock = Hash.new(0)
     @deposite = 0
     @pay_back = 0
     @sales = 0
-  end
-
-  def deposite
-    @deposite
   end
 
   def add_stock(drink, quantity)
