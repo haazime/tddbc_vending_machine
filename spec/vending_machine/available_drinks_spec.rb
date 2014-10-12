@@ -37,6 +37,16 @@ RSpec.describe VendingMachine do
         it { is_expected.to match(c[:drinks]) }
       end
     end
+
+    context "レッドブルを5本買った後、500円を投入する" do
+      before do
+        Money.new([1000]).throw_to(machine)
+        5.times { machine.serve_drink(REDBULL) }
+        Money.new([100, 100, 100, 100, 100]).throw_to(machine)
+      end
+
+      it { is_expected.to match([COLA, WATER]) }
+    end
   end
 
   context "コーラ:0,レッドブル:5,水:5がある場合" do
