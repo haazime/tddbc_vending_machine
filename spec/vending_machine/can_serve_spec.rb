@@ -1,9 +1,7 @@
 require 'spec_helper'
 
 RSpec.describe VendingMachine do
-  let(:machine) do
-    described_class.new
-  end
+  let(:machine) { described_class.new }
 
   describe "#can_serve?" do
     subject do
@@ -15,6 +13,10 @@ RSpec.describe VendingMachine do
     end
 
     context "コーラの在庫がある場合" do
+      before do
+        machine.add_stock(COLA, 5)
+      end
+
       [
         { money: [100, 10], can_serve: false },
         { money: [100, 10, 10], can_serve: true },
@@ -34,10 +36,6 @@ RSpec.describe VendingMachine do
     end
 
     context "コーラの在庫がない場合" do
-      let(:machine) do
-        described_class.new(COLA, 0)
-      end
-
       [
         { money: [100, 10], can_serve: false },
         { money: [100, 10, 10], can_serve: false },

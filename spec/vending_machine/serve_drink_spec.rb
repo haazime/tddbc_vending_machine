@@ -1,15 +1,17 @@
 require 'spec_helper'
 
 RSpec.describe VendingMachine do
-  let(:machine) do
-    described_class.new
-  end
+  let(:machine) { described_class.new }
 
   subject do
     machine.serve_drink
   end
 
   context "コーラの在庫がある場合" do
+    before do
+      machine.add_stock(COLA, 5)
+    end
+
     [
       { money: [100, 10, 10], pay_back: 0, sales: 120 },
       { money: [100, 10, 10, 10], pay_back: 10, sales: 120 },
@@ -45,10 +47,6 @@ RSpec.describe VendingMachine do
   end
 
   context "コーラの在庫がない場合" do
-    let(:machine) do
-      described_class.new(COLA, 0)
-    end
-
     [
       { money: [100, 10, 10], pay_back: 120, sales: 0 },
       { money: [100, 10, 10, 10], pay_back: 130, sales: 0 },

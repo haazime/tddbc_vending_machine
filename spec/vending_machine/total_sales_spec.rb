@@ -2,7 +2,9 @@ require 'spec_helper'
 
 RSpec.describe VendingMachine do
   let(:machine) do
-    described_class.new(COLA, 15)
+    described_class.new.tap do |m|
+      m.add_stock(COLA, 15)
+    end
   end
 
   subject do

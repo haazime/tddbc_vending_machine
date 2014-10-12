@@ -7,11 +7,10 @@ class VendingMachine
 
   attr_reader :stock, :sales
 
-  def initialize(drink=DEFAULT_DRINK, quantity=DEFAULT_DRINK_QUANTITY)
-    @stock = {}
+  def initialize
+    @stock = Hash.new(0)
     @charge = 0
     @sales = 0
-    add_stock(drink, quantity)
   end
 
   def add_stock(drink, quantity)
@@ -23,6 +22,10 @@ class VendingMachine
     @stock[drink] -= 1
     @charge -= drink.price
     @sales += drink.price
+  end
+
+  def available_drinks
+    @stock.keys.select {|d| @charge >= d.price }
   end
 
   def can_serve?(drink=DEFAULT_DRINK)
