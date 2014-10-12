@@ -15,17 +15,30 @@ RSpec.describe VendingMachine do
     end
 
     context "レッドブルを5本追加" do
-      skip do
       before do
-        machine.add_stock(name: 'レッドブル', price: 200, quantity: 5)
+        machine.add_stock(REDBULL, 5)
       end
 
       it do
         is_expected.to eq({
-          name: 'コーラ', price: 120, quantity: 5,
-          name: 'レッドブル', price: 200, quantity: 5,
+          COLA => 5,
+          REDBULL => 5
         })
       end
+    end
+
+    context "レッドブルを5本,水を5本追加" do
+      before do
+        machine.add_stock(REDBULL, 5)
+        machine.add_stock(WATER, 5)
+      end
+
+      it do
+        is_expected.to eq({
+          COLA => 5,
+          REDBULL => 5,
+          WATER => 5
+        })
       end
     end
   end

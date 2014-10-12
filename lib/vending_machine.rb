@@ -13,6 +13,10 @@ class VendingMachine
     @sales = 0
   end
 
+  def add_stock(drink, quantity)
+    @stock.merge!(drink => quantity)
+  end
+
   def serve_drink(drink=DEFAULT_DRINK)
     return self unless can_serve?(drink)
     @stock[drink] -= 1
