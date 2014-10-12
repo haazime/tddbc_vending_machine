@@ -25,7 +25,7 @@ class VendingMachine
   end
 
   def available_drinks
-    @stock.keys.select {|d| @charge >= d.price }
+    @stock.keys.select {|d| can_serve?(d) }
   end
 
   def can_serve?(drink=DEFAULT_DRINK)
