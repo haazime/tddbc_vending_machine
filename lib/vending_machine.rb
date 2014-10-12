@@ -2,13 +2,23 @@ class VendingMachine
   AVAILABLE_MONEY = [10, 50, 100, 500, 1000].freeze
   DEFAULT_STOCK = { name: 'コーラ', price: 120, quantity: 5 }
 
+  attr_reader :sales
+
   def initialize(stock=DEFAULT_STOCK)
-    @stock = stock
-    @money_collection = []
+    @stock = stock.dup
+    @amount = 0
+    @sales = 0
+  end
+
+  def serve_drink
+    return self unless can_buy?
+    @stock[:quantity] -= 1
+    @amount -= @stock[:price]
+    @sales += @stock[:price]
   end
 
   def can_buy?
-    amount >= @stock[:price] && @stock[:quantity] > 0
+    @amount >= @stock[:price] && @stock[:quantity] > 0
   end
 
   def drinks
@@ -17,15 +27,11 @@ class VendingMachine
 
   def receive_money(money)
     return money if available_money?(money)
-    @money_collection << money
-  end
-
-  def amount
-    @money_collection.inject(&:+) || 0
+    @amount += money
   end
 
   def pay_back
-    amount
+    @amount
   end
 
 private
