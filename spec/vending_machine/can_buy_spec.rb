@@ -15,52 +15,21 @@ RSpec.describe VendingMachine do
     end
 
     context "コーラの在庫がある場合" do
-      context "110円を投入した時" do
-        before do
-          [100, 10].each {|m| machine.receive_money(m) }
+      [
+        { money: [100, 10], can_buy: false },
+        { money: [100, 10, 10], can_buy: true },
+        { money: [100, 10, 10, 10], can_buy: true },
+        { money: [100, 50], can_buy: true },
+        { money: [500], can_buy: true },
+        { money: [1000], can_buy: true },
+      ].each do |c|
+        context "#{c[:money].inject(&:+)}円を投入した時" do
+          before do
+            c[:money].each {|m| machine.receive_money(m) }
+          end
+
+          it { is_expected.to be c[:can_buy] }
         end
-
-        it { is_expected.to be false }
-      end
-
-      context "120円を投入した時" do
-        before do
-          [100, 10, 10].each {|m| machine.receive_money(m) }
-        end
-
-        it { is_expected.to be true }
-      end
-
-      context "130円を投入した時" do
-        before do
-          [100, 10, 10, 10].each {|m| machine.receive_money(m) }
-        end
-
-        it { is_expected.to be true }
-      end
-
-      context "150円を投入した時" do
-        before do
-          [100, 50].each {|m| machine.receive_money(m) }
-        end
-
-        it { is_expected.to be true }
-      end
-
-      context "500円を投入した時" do
-        before do
-          [500].each {|m| machine.receive_money(m) }
-        end
-
-        it { is_expected.to be true }
-      end
-
-      context "1000円を投入した時" do
-        before do
-          [1000].each {|m| machine.receive_money(m) }
-        end
-
-        it { is_expected.to be true }
       end
     end
 
@@ -69,52 +38,21 @@ RSpec.describe VendingMachine do
         described_class.new(name: 'コーラ', price: 120, quantity: 0)
       end
 
-      context "110円を投入した時" do
-        before do
-          [100, 10].each {|m| machine.receive_money(m) }
+      [
+        { money: [100, 10], can_buy: false },
+        { money: [100, 10, 10], can_buy: false },
+        { money: [100, 10, 10, 10], can_buy: false },
+        { money: [100, 50], can_buy: false },
+        { money: [500], can_buy: false },
+        { money: [1000], can_buy: false },
+      ].each do |c|
+        context "#{c[:money].inject(&:+)}円を投入した時" do
+          before do
+            c[:money].each {|m| machine.receive_money(m) }
+          end
+
+          it { is_expected.to be c[:can_buy] }
         end
-
-        it { is_expected.to be false }
-      end
-
-      context "120円を投入した時" do
-        before do
-          [100, 10, 10].each {|m| machine.receive_money(m) }
-        end
-
-        it { is_expected.to be false }
-      end
-
-      context "130円を投入した時" do
-        before do
-          [100, 10, 10, 10].each {|m| machine.receive_money(m) }
-        end
-
-        it { is_expected.to be false }
-      end
-
-      context "150円を投入した時" do
-        before do
-          [100, 50].each {|m| machine.receive_money(m) }
-        end
-
-        it { is_expected.to be false }
-      end
-
-      context "500円を投入した時" do
-        before do
-          [500].each {|m| machine.receive_money(m) }
-        end
-
-        it { is_expected.to be false }
-      end
-
-      context "1000円を投入した時" do
-        before do
-          [1000].each {|m| machine.receive_money(m) }
-        end
-
-        it { is_expected.to be false }
       end
     end
   end
