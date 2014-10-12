@@ -26,17 +26,11 @@ class VendingMachine
   end
 
   def receive_money(money)
-    return money if available_money?(money)
+    return money unless AVAILABLE_MONEY.include?(money)
     @amount += money
   end
 
   def pay_back
     @amount
-  end
-
-private
-
-  def available_money?(money)
-    !AVAILABLE_MONEY.include?(money)
   end
 end
