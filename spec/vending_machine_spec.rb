@@ -7,13 +7,14 @@ context "コーラ1本在庫がある場合" do
     end
   end
 
+skip do
   it do
     machine.receive_money(10)
     expect(machine.available_drinks).to be_empty
-    
+
     machine.receive_money(100)
     expect(machine.available_drinks).to be_empty
-    
+
     machine.receive_money(10)
     expect(machine.available_drinks).to match([COLA])
 
@@ -26,6 +27,7 @@ context "コーラ1本在庫がある場合" do
     expect(machine.available_drinks).to be_empty
   end
 end
+end
 
 context "コーラ2本,レッドブル1本,水2本在庫がある場合" do
   let(:machine) do
@@ -36,6 +38,7 @@ context "コーラ2本,レッドブル1本,水2本在庫がある場合" do
     end
   end
 
+skip do
   it do
     machine.receive_money(500)
     expect(machine.available_drinks).to match([COLA, REDBULL, WATER])
@@ -76,4 +79,5 @@ context "コーラ2本,レッドブル1本,水2本在庫がある場合" do
     expect(machine.pay_back).to eq(910)
     expect(machine.available_drinks).to be_empty
   end
+end
 end

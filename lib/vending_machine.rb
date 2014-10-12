@@ -13,8 +13,13 @@ class VendingMachine
 
   def initialize
     @stock = Hash.new(0)
-    @charge = 0
+    @deposite = 0
+    @pay_back = 0
     @sales = 0
+  end
+
+  def deposite
+    @deposite
   end
 
   def add_stock(drink, quantity)
@@ -24,7 +29,7 @@ class VendingMachine
   def serve_drink(drink=DEFAULT_DRINK)
     return self unless can_serve?(drink)
     @stock[drink] -= 1
-    @charge -= drink.price
+    @deposite -= drink.price
     @sales += drink.price
   end
 
@@ -33,15 +38,20 @@ class VendingMachine
   end
 
   def can_serve?(drink=DEFAULT_DRINK)
-    @charge >= drink.price && @stock[drink] > 0
+    @deposite >= drink.price && @stock[drink] > 0
   end
 
   def receive_money(money)
-    return money unless AVAILABLE_MONEY.include?(money)
-    @charge += money
+    if AVAILABLE_MONEY.include?(money)
+      @deposite += money
+    else
+      @pay_back += money
+    end
   end
 
   def pay_back
-    @charge
+    amount = @deposite + @pay_back
+    @deposite = 0
+    amount
   end
 end
