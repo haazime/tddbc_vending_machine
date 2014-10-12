@@ -7,7 +7,7 @@ RSpec.describe VendingMachine do
 
   describe "#payback" do
     subject do
-      Array(money).each {|m| machine.receive(m) }
+      Array(money).each {|m| machine.receive_money(m) }
       machine.pay_back
     end
 

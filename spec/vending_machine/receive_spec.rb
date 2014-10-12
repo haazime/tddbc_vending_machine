@@ -8,25 +8,25 @@ RSpec.describe VendingMachine do
   describe "#recieve" do
     context "1円1枚を投入" do
       it do
-        expect(machine.receive(1)).to eq(1)
+        expect(machine.receive_money(1)).to eq(1)
       end
     end
 
     context "5円1枚を投入" do
       it do
-        expect(machine.receive(5)).to eq(5)
+        expect(machine.receive_money(5)).to eq(5)
       end
     end
 
     context "5000円1枚を投入" do
       it do
-        expect(machine.receive(5000)).to eq(5000)
+        expect(machine.receive_money(5000)).to eq(5000)
       end
     end
 
     context "10000円1枚を投入" do
       it do
-        expect(machine.receive(10000)).to eq(10000)
+        expect(machine.receive_money(10000)).to eq(10000)
       end
     end
 
@@ -38,7 +38,7 @@ RSpec.describe VendingMachine do
           5000,
           10000
         ]
-        backs = money.map {|m| machine.receive(m) }
+        backs = money.map {|m| machine.receive_money(m) }
         expect(backs).to eq(money)
       end
     end
