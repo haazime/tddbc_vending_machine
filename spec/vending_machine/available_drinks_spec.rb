@@ -22,53 +22,19 @@ RSpec.describe VendingMachine do
       it { is_expected.to be_empty }
     end
 
-    context "120円投入した時" do
-      before do
-        [100, 10, 10].each {|m| machine.receive_money(m) }
-      end
+    [
+      { money: Money.new([100, 10, 10]), drinks: [COLA, WATER] },
+      { money: Money.new([100]), drinks: [WATER] },
+      { money: Money.new([100, 50]), drinks: [COLA, WATER] },
+      { money: Money.new([500]), drinks: [COLA, REDBULL, WATER] },
+      { money: Money.new([1000]), drinks: [COLA, REDBULL, WATER] },
+    ].each do |c|
+      context "#{c[:money].total}円投入した時" do
+        before do
+          c[:money].throw_to(machine)
+        end
 
-      it do
-        is_expected.to match([COLA, WATER])
-      end
-    end
-
-    context "100円投入した時" do
-      before do
-        [100].each {|m| machine.receive_money(m) }
-      end
-
-      it do
-        is_expected.to match([WATER])
-      end
-    end
-
-    context "150円投入した時" do
-      before do
-        [100, 50].each {|m| machine.receive_money(m) }
-      end
-
-      it do
-        is_expected.to match([COLA, WATER])
-      end
-    end
-
-    context "500円投入した時" do
-      before do
-        [500].each {|m| machine.receive_money(m) }
-      end
-
-      it do
-        is_expected.to match([COLA, REDBULL, WATER])
-      end
-    end
-
-    context "1000円投入した時" do
-      before do
-        [1000].each {|m| machine.receive_money(m) }
-      end
-
-      it do
-        is_expected.to match([COLA, REDBULL, WATER])
+        it { is_expected.to match(c[:drinks]) }
       end
     end
   end
@@ -83,53 +49,19 @@ RSpec.describe VendingMachine do
       it { is_expected.to be_empty }
     end
 
-    context "120円投入した時" do
-      before do
-        [100, 10, 10].each {|m| machine.receive_money(m) }
-      end
+    [
+      { money: Money.new([100, 10, 10]), drinks: [WATER] },
+      { money: Money.new([100]), drinks: [WATER] },
+      { money: Money.new([100, 50]), drinks: [WATER] },
+      { money: Money.new([500]), drinks: [REDBULL, WATER] },
+      { money: Money.new([1000]), drinks: [REDBULL, WATER] },
+    ].each do |c|
+      context "#{c[:money].total}円投入した時" do
+        before do
+          c[:money].throw_to(machine)
+        end
 
-      it do
-        is_expected.to match([WATER])
-      end
-    end
-
-    context "100円投入した時" do
-      before do
-        [100].each {|m| machine.receive_money(m) }
-      end
-
-      it do
-        is_expected.to match([WATER])
-      end
-    end
-
-    context "150円投入した時" do
-      before do
-        [100, 50].each {|m| machine.receive_money(m) }
-      end
-
-      it do
-        is_expected.to match([WATER])
-      end
-    end
-
-    context "500円投入した時" do
-      before do
-        [500].each {|m| machine.receive_money(m) }
-      end
-
-      it do
-        is_expected.to match([REDBULL, WATER])
-      end
-    end
-
-    context "1000円投入した時" do
-      before do
-        [1000].each {|m| machine.receive_money(m) }
-      end
-
-      it do
-        is_expected.to match([REDBULL, WATER])
+        it { is_expected.to match(c[:drinks]) }
       end
     end
   end

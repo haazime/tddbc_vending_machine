@@ -18,16 +18,16 @@ RSpec.describe VendingMachine do
       end
 
       [
-        { money: [100, 10], can_serve: false },
-        { money: [100, 10, 10], can_serve: true },
-        { money: [100, 10, 10, 10], can_serve: true },
-        { money: [100, 50], can_serve: true },
-        { money: [500], can_serve: true },
-        { money: [1000], can_serve: true },
+        { money: Money.new([100, 10]), can_serve: false },
+        { money: Money.new([100, 10, 10]), can_serve: true },
+        { money: Money.new([100, 10, 10, 10]), can_serve: true },
+        { money: Money.new([100, 50]), can_serve: true },
+        { money: Money.new([500]), can_serve: true },
+        { money: Money.new([1000]), can_serve: true },
       ].each do |c|
-        context "#{c[:money].inject(&:+)}円を投入した時" do
+        context "#{c[:money].total}円を投入した時" do
           before do
-            c[:money].each {|m| machine.receive_money(m) }
+            c[:money].throw_to(machine)
           end
 
           it { is_expected.to be c[:can_serve] }
@@ -37,16 +37,16 @@ RSpec.describe VendingMachine do
 
     context "コーラの在庫がない場合" do
       [
-        { money: [100, 10], can_serve: false },
-        { money: [100, 10, 10], can_serve: false },
-        { money: [100, 10, 10, 10], can_serve: false },
-        { money: [100, 50], can_serve: false },
-        { money: [500], can_serve: false },
-        { money: [1000], can_serve: false },
+        { money: Money.new([100, 10]), can_serve: false },
+        { money: Money.new([100, 10, 10]), can_serve: false },
+        { money: Money.new([100, 10, 10, 10]), can_serve: false },
+        { money: Money.new([100, 50]), can_serve: false },
+        { money: Money.new([500]), can_serve: false },
+        { money: Money.new([1000]), can_serve: false },
       ].each do |c|
-        context "#{c[:money].inject(&:+)}円を投入した時" do
+        context "#{c[:money].total}円を投入した時" do
           before do
-            c[:money].each {|m| machine.receive_money(m) }
+            c[:money].throw_to(machine)
           end
 
           it { is_expected.to be c[:can_serve] }
