@@ -8,9 +8,10 @@ class VendingMachine
   attr_reader :stock, :sales
 
   def initialize(drink=DEFAULT_DRINK, quantity=DEFAULT_DRINK_QUANTITY)
-    @stock = {}.merge(drink => quantity)
+    @stock = {}
     @charge = 0
     @sales = 0
+    add_stock(drink, quantity)
   end
 
   def add_stock(drink, quantity)
