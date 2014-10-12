@@ -23,8 +23,8 @@ RSpec.describe VendingMachine do
         end
 
         it do
-          expect { subject }.to change { machine.drinks[:quantity] }
-            .from(machine.drinks[:quantity]).to(machine.drinks[:quantity] - 1)
+          expect { subject }.to change { machine.stock[:quantity] }
+            .from(machine.stock[:quantity]).to(machine.stock[:quantity] - 1)
           expect(machine.pay_back).to eq(c[:pay_back])
           expect(machine.sales).to eq(c[:sales])
         end
@@ -37,7 +37,7 @@ RSpec.describe VendingMachine do
       end
 
       it do
-        expect { subject }.to_not change { machine.drinks[:quantity] }
+        expect { subject }.to_not change { machine.stock[:quantity] }
         expect(machine.pay_back).to eq(110)
         expect(machine.sales).to eq(0)
       end
@@ -62,7 +62,7 @@ RSpec.describe VendingMachine do
         end
 
         it do
-          expect { subject }.to_not change { machine.drinks[:quantity] }
+          expect { subject }.to_not change { machine.stock[:quantity] }
           expect(machine.pay_back).to eq(c[:pay_back])
           expect(machine.sales).to eq(c[:sales])
         end

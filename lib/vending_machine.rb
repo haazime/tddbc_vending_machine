@@ -2,7 +2,7 @@ class VendingMachine
   AVAILABLE_MONEY = [10, 50, 100, 500, 1000].freeze
   DEFAULT_STOCK = { name: 'コーラ', price: 120, quantity: 5 }
 
-  attr_reader :sales
+  attr_reader :stock, :sales
 
   def initialize(stock=DEFAULT_STOCK)
     @stock = stock.dup
@@ -19,10 +19,6 @@ class VendingMachine
 
   def can_serve?
     @charge >= @stock[:price] && @stock[:quantity] > 0
-  end
-
-  def drinks
-    @stock
   end
 
   def receive_money(money)
