@@ -1,9 +1,5 @@
 require 'vending_machine'
 
-COLA = Drink.new('コーラ', 120)
-REDBULL = Drink.new('レッドブル', 200)
-WATER = Drink.new('水', 100) 
-
 Money = Struct.new(:money) do
   def total
     money.inject(&:+)
