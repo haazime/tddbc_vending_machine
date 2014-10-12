@@ -12,7 +12,7 @@ RSpec.describe VendingMachine do
 
     context "初期状態" do
       it do
-        is_expected.to eq({ name: 'コーラ', price: 120, stock: 5 })
+        is_expected.to eq({ name: 'コーラ', price: 120, quantity: 5 })
       end
     end
   end

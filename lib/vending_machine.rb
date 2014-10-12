@@ -1,13 +1,15 @@
+require 'drink'
+
 class VendingMachine
   AVAILABLE_MONEY = [10, 50, 100, 500, 1000].freeze
 
   def initialize
-    @drinks = { name: 'コーラ', price: 120, stock: 5 }
+    @stock = { name: 'コーラ', price: 120, quantity: 5 }
     @money_collection = []
   end
 
   def drinks
-    @drinks
+    @stock
   end
 
   def receive(money)
