@@ -1,6 +1,5 @@
 require 'drink'
 require 'money_collection'
-require 'change_stock'
 
 class VendingMachine
   AVAILABLE_MONEY = [10, 50, 100, 500, 1000].freeze
