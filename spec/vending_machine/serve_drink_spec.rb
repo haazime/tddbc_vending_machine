@@ -9,7 +9,7 @@ RSpec.describe VendingMachine do
 
   context "コーラの在庫がある場合" do
     before do
-      machine.add_stock(COLA, 5)
+      machine.add_drink_stock(COLA, 5)
     end
 
     [
@@ -25,8 +25,8 @@ RSpec.describe VendingMachine do
         end
 
         it do
-          expect { subject }.to change { machine.stock[COLA] }
-            .from(machine.stock[COLA]).to(machine.stock[COLA] - 1)
+          expect { subject }.to change { machine.drink_stock[COLA] }
+            .from(machine.drink_stock[COLA]).to(machine.drink_stock[COLA] - 1)
           expect(machine.pay_back).to eq(c[:pay_back])
           expect(machine.sales).to eq(c[:sales])
         end
@@ -39,7 +39,7 @@ RSpec.describe VendingMachine do
       end
 
       it do
-        expect { subject }.to_not change { machine.stock[COLA] }
+        expect { subject }.to_not change { machine.drink_stock[COLA] }
         expect(machine.pay_back).to eq(110)
         expect(machine.sales).to eq(0)
       end
@@ -60,7 +60,7 @@ RSpec.describe VendingMachine do
         end
 
         it do
-          expect { subject }.to_not change { machine.stock[COLA] }
+          expect { subject }.to_not change { machine.drink_stock[COLA] }
           expect(machine.pay_back).to eq(c[:pay_back])
           expect(machine.sales).to eq(c[:sales])
         end

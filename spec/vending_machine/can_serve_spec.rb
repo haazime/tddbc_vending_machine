@@ -14,7 +14,7 @@ RSpec.describe VendingMachine do
 
     context "コーラの在庫がある場合" do
       before do
-        machine.add_stock(COLA, 5)
+        machine.add_drink_stock(COLA, 5)
       end
 
       [

@@ -9,32 +9,32 @@ class VendingMachine
   DEFAULT_DRINK = COLA
   DEFAULT_DRINK_QUANTITY = 5
 
-  attr_reader :deposite, :stock, :sales
+  attr_reader :deposite, :drink_stock, :sales
 
   def initialize
-    @stock = Hash.new(0)
+    @drink_stock = Hash.new(0)
     @deposite = 0
     @pay_back = 0
     @sales = 0
   end
 
-  def add_stock(drink, quantity)
-    @stock.merge!(drink => quantity)
+  def add_drink_stock(drink, quantity)
+    @drink_stock.merge!(drink => quantity)
   end
 
   def serve_drink(drink=DEFAULT_DRINK)
     return self unless can_serve?(drink)
-    @stock[drink] -= 1
+    @drink_stock[drink] -= 1
     @deposite -= drink.price
     @sales += drink.price
   end
 
   def available_drinks
-    @stock.keys.select {|d| can_serve?(d) }
+    @drink_stock.keys.select {|d| can_serve?(d) }
   end
 
   def can_serve?(drink=DEFAULT_DRINK)
-    @deposite >= drink.price && @stock[drink] > 0
+    @deposite >= drink.price && @drink_stock[drink] > 0
   end
 
   def receive_money(money)

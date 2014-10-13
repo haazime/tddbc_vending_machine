@@ -13,9 +13,9 @@ RSpec.describe VendingMachine do
 
   context "コーラ:5,レッドブル:5,水:5がある場合" do
     before do
-      machine.add_stock(COLA, 5)
-      machine.add_stock(REDBULL, 5)
-      machine.add_stock(WATER, 5)
+      machine.add_drink_stock(COLA, 5)
+      machine.add_drink_stock(REDBULL, 5)
+      machine.add_drink_stock(WATER, 5)
     end
 
     context "お金を投入していない時" do
@@ -51,9 +51,9 @@ RSpec.describe VendingMachine do
 
   context "コーラ:0,レッドブル:5,水:5がある場合" do
     before do
-      machine.add_stock(COLA, 0)
-      machine.add_stock(REDBULL, 5)
-      machine.add_stock(WATER, 5)
+      machine.add_drink_stock(COLA, 0)
+      machine.add_drink_stock(REDBULL, 5)
+      machine.add_drink_stock(WATER, 5)
     end
 
     context "お金を投入していない時" do

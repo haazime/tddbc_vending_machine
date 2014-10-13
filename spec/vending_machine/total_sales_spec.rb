@@ -3,7 +3,7 @@ require 'spec_helper'
 RSpec.describe VendingMachine do
   let(:machine) do
     described_class.new.tap do |m|
-      m.add_stock(COLA, 15)
+      m.add_drink_stock(COLA, 15)
     end
   end
 
