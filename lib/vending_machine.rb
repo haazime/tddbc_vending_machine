@@ -1,5 +1,5 @@
 require 'drink'
-require 'money_collection'
+require 'money_buffer'
 
 class VendingMachine
   AVAILABLE_MONEY = [10, 50, 100, 500, 1000].freeze
@@ -10,9 +10,9 @@ class VendingMachine
 
   def initialize
     @drink_stock = Hash.new(0)
-    @change_stock = MoneyCollection.new
-    @deposite = MoneyCollection.new
-    @pay_back = MoneyCollection.new
+    @change_stock = MoneyBuffer.new
+    @deposite = MoneyBuffer.new
+    @pay_back = MoneyBuffer.new
     @sales = 0
   end
 
@@ -60,8 +60,8 @@ class VendingMachine
 
   def pay_back
     pay_back = @pay_back.add(@deposite)
-    @deposite = MoneyCollection.new
-    @pay_back = MoneyCollection.new
+    @deposite = MoneyBuffer.new
+    @pay_back = MoneyBuffer.new
     pay_back.to_a
   end
 end

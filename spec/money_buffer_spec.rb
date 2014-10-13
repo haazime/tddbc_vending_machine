@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-RSpec.describe MoneyCollection do
+RSpec.describe MoneyBuffer do
   describe "#append" do
     it do
       expect(described_class.new.amount).to eq(0)

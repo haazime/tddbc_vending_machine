@@ -1,4 +1,4 @@
-class MoneyCollection
+class MoneyBuffer
   include Comparable
 
   def initialize(moneis={})
