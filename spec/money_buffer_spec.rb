@@ -1,27 +1,6 @@
 require 'spec_helper'
 
 RSpec.describe MoneyBuffer do
-  describe "#append" do
-    it do
-      expect(described_class.new.amount).to eq(0)
-    end
-
-    it do
-      mc = described_class.new
-      mc = mc.append(10)
-      expect(mc.amount).to eq(10)
-    end
-
-    it do
-      mc = described_class.new
-      mc = mc.append(10, 3)
-      mc = mc.append(50, 2)
-      mc = mc.append(500, 1)
-      mc = mc.append(1000, 2)
-      expect(mc.amount).to eq(2630)
-    end
-  end
-
   describe "#add" do
     it do
       a = described_class.new

@@ -17,16 +17,12 @@ class MoneyBuffer
     to_a.inject(&:+) || 0
   end
 
-  def append(kind, quantity=1)
-    new = @moneis.dup
-    new[kind] = (new[kind] || 0) + quantity
-    self.class.new(new)
-  end
-
   def add(other)
-    other.kinds.inject(self) do |acc, kind|
-      acc.append(kind, other.quantity(kind))
+    new = @moneis.dup
+    other.kinds.each do |kind|
+      new[kind] = (new[kind] || 0) + other.quantity(kind)
     end
+    self.class.new(new)
   end
 
   def subtract(other)
@@ -42,8 +38,8 @@ class MoneyBuffer
     return new if amount == 0
     unders = moneis.select {|m| m <= amount }
     return nil if (unders.inject(&:+) || 0) <= amount
-    money = unders.shift
-    exchange(amount - money, new.append(money), unders)
+    money = self.class.new(unders.shift => 1)
+    exchange(amount - money.amount, new.add(money), unders)
   end
 
   def to_a

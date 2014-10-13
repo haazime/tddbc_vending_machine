@@ -21,7 +21,7 @@ class VendingMachine
   end
 
   def add_change_stock(money, quantity)
-    @change_stock = @change_stock.append(money, quantity)
+    @change_stock = @change_stock.add(MoneyBuffer.new(money => quantity))
   end
 
   def serve_drink(drink=DEFAULT_DRINK)
@@ -47,10 +47,11 @@ class VendingMachine
   end
 
   def receive_money(money)
+    new_money = MoneyBuffer.new(money => 1)
     if AVAILABLE_MONEY.include?(money)
-      @deposite = @deposite.append(money)
+      @deposite = @deposite.add(new_money)
     else
-      @pay_back = @pay_back.append(money)
+      @pay_back = @pay_back.add(new_money)
     end
   end
 
