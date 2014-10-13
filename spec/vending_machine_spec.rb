@@ -4,6 +4,11 @@ context "コーラ1本在庫がある場合" do
   let(:machine) do
     VendingMachine.new.tap do |m|
       m.add_drink_stock(COLA, 1)
+      m.add_change_stock(1000, 10)
+      m.add_change_stock(500, 10)
+      m.add_change_stock(100, 10)
+      m.add_change_stock(50, 10)
+      m.add_change_stock(10, 10)
     end
   end
 
@@ -38,6 +43,11 @@ context "コーラ2本,レッドブル1本,水2本在庫がある場合" do
       m.add_drink_stock(COLA, 2)
       m.add_drink_stock(REDBULL, 1)
       m.add_drink_stock(WATER, 2)
+      m.add_change_stock(1000, 10)
+      m.add_change_stock(500, 10)
+      m.add_change_stock(100, 10)
+      m.add_change_stock(50, 10)
+      m.add_change_stock(10, 10)
     end
   end
 

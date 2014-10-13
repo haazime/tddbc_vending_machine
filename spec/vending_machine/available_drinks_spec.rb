@@ -7,6 +7,13 @@ RSpec.describe VendingMachine do
     machine.available_drinks
   end
 
+  before do
+    machine.add_change_stock(500, 10)
+    machine.add_change_stock(100, 10)
+    machine.add_change_stock(50, 10)
+    machine.add_change_stock(10, 10)
+  end
+
   context "在庫が何もない場合" do
     it { is_expected.to be_empty }
   end

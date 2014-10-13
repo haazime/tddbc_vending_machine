@@ -7,6 +7,13 @@ RSpec.describe VendingMachine do
     machine.serve_drink
   end
 
+  before do
+    machine.add_change_stock(500, 10)
+    machine.add_change_stock(100, 10)
+    machine.add_change_stock(50, 10)
+    machine.add_change_stock(10, 10)
+  end
+
   context "コーラの在庫がある場合" do
     before do
       machine.add_drink_stock(COLA, 5)

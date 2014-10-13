@@ -1,20 +1,19 @@
-Drink = Struct.new(:name, :price)
-
-COLA    = Drink.new('コーラ', 120)
-REDBULL = Drink.new('レッドブル', 200)
-WATER   = Drink.new('水', 100)
+require 'drink'
+require 'money_collection'
+require 'change_stock'
 
 class VendingMachine
   AVAILABLE_MONEY = [10, 50, 100, 500, 1000].freeze
   DEFAULT_DRINK = COLA
   DEFAULT_DRINK_QUANTITY = 5
 
-  attr_reader :deposite, :drink_stock, :sales
+  attr_reader :drink_stock, :sales
 
   def initialize
     @drink_stock = Hash.new(0)
-    @deposite = 0
-    @pay_back = 0
+    @change_stock = MoneyCollection.new
+    @deposite = MoneyCollection.new
+    @pay_back = MoneyCollection.new
     @sales = 0
   end
 
@@ -22,11 +21,21 @@ class VendingMachine
     @drink_stock.merge!(drink => quantity)
   end
 
+  def add_change_stock(money, quantity)
+    @change_stock = @change_stock.append(money, quantity)
+  end
+
   def serve_drink(drink=DEFAULT_DRINK)
     return self unless can_serve?(drink)
+
+    new_change_stock = @change_stock.add(@deposite)
+    pay_back = new_change_stock.exchange(@deposite.amount - drink.price)
+    return self unless pay_back
+
     @drink_stock[drink] -= 1
-    @deposite -= drink.price
     @sales += drink.price
+    @change_stock = new_change_stock
+    @deposite = pay_back
   end
 
   def available_drinks
@@ -34,20 +43,26 @@ class VendingMachine
   end
 
   def can_serve?(drink=DEFAULT_DRINK)
-    @deposite >= drink.price && @drink_stock[drink] > 0
+    @deposite >= drink.price &&
+      @drink_stock[drink] > 0
   end
 
   def receive_money(money)
     if AVAILABLE_MONEY.include?(money)
-      @deposite += money
+      @deposite = @deposite.append(money)
     else
-      @pay_back += money
+      @pay_back = @pay_back.append(money)
     end
   end
 
+  def deposite
+    @deposite.amount
+  end
+
   def pay_back
-    amount = @deposite + @pay_back
-    @deposite = 0
-    amount
+    pay_back = @pay_back.add(@deposite)
+    @deposite = MoneyCollection.new
+    @pay_back = MoneyCollection.new
+    pay_back.amount
   end
 end

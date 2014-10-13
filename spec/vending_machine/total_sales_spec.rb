@@ -12,6 +12,13 @@ RSpec.describe VendingMachine do
   end
 
   before do
+    machine.add_change_stock(500, 10)
+    machine.add_change_stock(100, 10)
+    machine.add_change_stock(50, 10)
+    machine.add_change_stock(10, 10)
+  end
+
+  before do
     machine.receive_money(1000)
     machine.receive_money(500)
     20.times { machine.serve_drink }
