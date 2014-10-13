@@ -34,12 +34,12 @@ class MoneyBuffer
   end
 
   def exchange(amount, new=self.class.new, moneis=to_a)
-    return nil if amount < 0
     return new if amount == 0
-    unders = moneis.select {|m| m <= amount }
-    return nil if (unders.inject(&:+) || 0) <= amount
-    money = self.class.new(unders.shift => 1)
-    exchange(amount - money.amount, new.add(money), unders)
+    return nil if amount < 0
+    return nil if amount > (moneis.inject(&:+) || 0)
+    availables = moneis.select {|m| m <= amount }
+    money = self.class.new(availables.shift => 1)
+    exchange(amount - money.amount, new.add(money), availables)
   end
 
   def to_a
