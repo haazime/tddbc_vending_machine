@@ -28,7 +28,7 @@ context "コーラ1本在庫がある場合" do
     machine.serve_drink(COLA)
     expect(machine.drink_stock[COLA]).to eq(0)
     expect(machine.deposite).to eq(0)
-    expect(machine.pay_back).to eq(0)
+    expect(machine.pay_back).to eq([])
     expect(machine.sales).to eq(COLA.price)
 
     machine.receive_money(500)
@@ -73,7 +73,7 @@ context "コーラ2本,レッドブル1本,水2本在庫がある場合" do
     expect(machine.sales).to eq(WATER.price + REDBULL.price + COLA.price)
     expect(machine.deposite).to eq(80)
     expect(machine.available_drinks).to be_empty
-    expect(machine.pay_back).to eq(80)
+    expect(machine.pay_back).to eq([50, 10, 10, 10])
     expect(machine.deposite).to eq(0)
 
     machine.receive_money(100)
@@ -97,7 +97,7 @@ context "コーラ2本,レッドブル1本,水2本在庫がある場合" do
     expect(machine.drink_stock[WATER]).to eq(0)
     expect(machine.sales).to eq(WATER.price + REDBULL.price + COLA.price + COLA.price + WATER.price)
     expect(machine.available_drinks).to be_empty
-    expect(machine.pay_back).to eq(910)
+    expect(machine.pay_back).to eq([500, 100, 100, 100, 100, 10])
     expect(machine.deposite).to eq(0)
   end
 end

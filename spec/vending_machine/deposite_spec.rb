@@ -6,7 +6,7 @@ RSpec.describe VendingMachine do
   context "まだ投入していない場合" do
     it do
       expect(machine.deposite).to eq(0)
-      expect(machine.pay_back).to eq(0)
+      expect(machine.pay_back).to eq([])
       expect(machine.deposite).to eq(0)
     end
   end
@@ -18,7 +18,7 @@ RSpec.describe VendingMachine do
 
     it do
       expect(machine.deposite).to eq(10)
-      expect(machine.pay_back).to eq(10)
+      expect(machine.pay_back).to eq([10])
       expect(machine.deposite).to eq(0)
     end
   end
@@ -31,7 +31,7 @@ RSpec.describe VendingMachine do
 
     it do
       expect(machine.deposite).to eq(2030)
-      expect(machine.pay_back).to eq(2030)
+      expect(machine.pay_back).to eq([1000] + [500] * 2 + [10] * 3)
       expect(machine.deposite).to eq(0)
     end
   end
@@ -44,7 +44,7 @@ RSpec.describe VendingMachine do
 
       it do
         expect(machine.deposite).to eq(0)
-        expect(machine.pay_back).to eq(m)
+        expect(machine.pay_back).to eq([m])
         expect(machine.deposite).to eq(0)
       end
     end
@@ -66,7 +66,7 @@ RSpec.describe VendingMachine do
       machine.receive_money(500)
       expect(machine.deposite).to eq(1520)
 
-      expect(machine.pay_back).to eq(6527)
+      expect(machine.pay_back).to eq([5000] + [1000] + [500] + [10] * 2 + [1] * 7)
     end
   end
 end

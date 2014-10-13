@@ -63,6 +63,6 @@ class VendingMachine
     pay_back = @pay_back.add(@deposite)
     @deposite = MoneyCollection.new
     @pay_back = MoneyCollection.new
-    pay_back.amount
+    pay_back.to_a
   end
 end
